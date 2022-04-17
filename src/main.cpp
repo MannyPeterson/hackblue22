@@ -13,6 +13,7 @@
 #define SERIAL_NO "21G07W00331"
 #define MAX_QUEUE 10
 #define TEMP_CHANGE_THRESHOLD 1
+#define TEMP_DANGER_THRESHOLD 74.0
 
 typedef struct Queue_s
 {
@@ -62,6 +63,7 @@ void loop()
 {
   double curr = 0.0;
   double prior = 0.0;
+  int trend = 0;
 
   if (true == door_closed())
   {
@@ -73,14 +75,25 @@ void loop()
     if (true == queue_full())
     {
       queue_remove(&prior);
+
+      trend = temp_trend(&curr, &prior);
     }
   }
 
   Serial.print("Current: " + String(curr, 4));
   Serial.print(" Prior: " + String(prior, 4));
-  Serial.println(" Trend: " + String(temp_trend(&curr, &prior)));
+  Serial.print(" Trend: " + String(trend));
 
-  // delay(1000);
+  if ((TEMP_DANGER_THRESHOLD < curr) && (0 < trend))
+  {
+    Serial.println(" DANGER");
+  }
+  else
+  {
+    Serial.println(" SAFE");
+  }
+
+  delay(1000);
 
   return;
 }
