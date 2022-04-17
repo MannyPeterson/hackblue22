@@ -14,11 +14,7 @@
 
 void read_temp(double *tmp_);
 void event_send(double *tmp_);
-
-const char *ssid = SSID;
-const char *pass = PASS;
-
-TMP117 tmp117;
+int door_closed(void);
 
 void setup()
 {
@@ -28,7 +24,7 @@ void setup()
   pinMode(DOOR_SW_PIN, INPUT_PULLUP);
 
   WiFi.mode(WIFI_MODE_STA);
-  WiFi.begin(ssid, pass);
+  WiFi.begin(SSID, PASS);
 
   while (WL_CONNECTED != WiFi.status())
   {
@@ -40,10 +36,19 @@ void setup()
 
 void loop()
 {
+  double temp = 0.0;
+
+  if (true == door_closed())
+  {
+
+    read_temp(&temp);
+  }
 }
 
 void read_temp(double *tmp_)
 {
+
+  TMP117 tmp117;
 
   Wire.begin(SDA, SCL);
   Wire.setClock(400000);
@@ -77,4 +82,16 @@ void event_send(double *tmp_)
   client.end();
 
   return;
+}
+
+int door_closed(void)
+{
+  int ret = false;
+
+  if (LOW == digitalRead(DOOR_SW_PIN))
+  {
+    ret = true;
+  }
+
+  return ret;
 }
