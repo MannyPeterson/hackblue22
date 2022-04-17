@@ -12,8 +12,8 @@
 #define CUSTOMER_ID "8923742934234"
 #define SERIAL_NO "21G07W00331"
 #define MAX_QUEUE 10
-#define TEMP_CHANGE_THRESHOLD 1
-#define TEMP_DANGER_THRESHOLD 74.0
+#define TEMP_CHANGE_THRESHOLD 3
+#define TEMP_DANGER_THRESHOLD 40.0
 
 typedef struct Queue_s
 {
@@ -93,7 +93,7 @@ void loop()
     Serial.println(" SAFE");
   }
 
-  delay(1000);
+  delay(60000);
 
   return;
 }
