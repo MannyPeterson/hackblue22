@@ -12,6 +12,7 @@
 #define CUSTOMER_ID "8923742934234"
 #define SERIAL_NO "21G07W00331"
 #define MAX_QUEUE 10
+#define TEMP_CHANGE_THRESHOLD 1
 
 typedef struct Queue_s
 {
@@ -32,20 +33,26 @@ int queue_full(void);
 int queue_size(void);
 void queue_add(double *tmp_);
 void queue_remove(double *tmp_);
+int temp_trend(double *curr_, double *prior_);
 
 void setup()
 {
 
+  temps.head = 0;
+  temps.tail = -1;
+  temps.size = 0;
+
   Serial.begin(115200);
 
-  pinMode(DOOR_SW_PIN, INPUT_PULLUP);
+  // pinMode(DOOR_SW_PIN, INPUT_PULLUP);
+  pinMode(DOOR_SW_PIN, INPUT_PULLDOWN);
 
   WiFi.mode(WIFI_MODE_STA);
   WiFi.begin(SSID, PASS);
 
   while (WL_CONNECTED != WiFi.status())
   {
-    delay(500);
+    delay(100);
   }
 
   return;
@@ -70,17 +77,16 @@ void loop()
   }
 
   Serial.print("Current: " + String(curr, 4));
-  Serial.print("Prior: " + String(prior, 4));
-  Serial.println();
+  Serial.print(" Prior: " + String(prior, 4));
+  Serial.println(" Trend: " + String(temp_trend(&curr, &prior)));
 
-  delay(1000);
+  // delay(1000);
 
   return;
 }
 
 void read_temp(double *tmp_)
 {
-
   TMP117 tmp117;
 
   Wire.begin(SDA, SCL);
@@ -89,7 +95,7 @@ void read_temp(double *tmp_)
 
   while (false == tmp117.dataReady())
   {
-    delay(500);
+    delay(100);
   }
 
   *tmp_ = tmp117.readTempF();
@@ -168,7 +174,7 @@ void queue_add(double *tmp_)
 
   if (false == queue_full())
   {
-    if (MAX_QUEUE - 1 == temps.tail)
+    if ((MAX_QUEUE - 1) == temps.tail)
     {
       temps.tail = -1;
     }
@@ -192,4 +198,28 @@ void queue_remove(double *tmp_)
   temps.size--;
 
   return;
+}
+
+int temp_trend(double *curr_, double *prior_)
+{
+  int ret = 0;
+
+  double change = 0.0;
+
+  change = *curr_ - *prior_;
+
+  if (abs(change) < TEMP_CHANGE_THRESHOLD)
+  {
+    ret = 0;
+  }
+  else if (change < 0)
+  {
+    ret = -1;
+  }
+  else if (change > 0)
+  {
+    ret = 1;
+  }
+
+  return ret;
 }
