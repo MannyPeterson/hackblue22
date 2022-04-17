@@ -14,6 +14,7 @@
 #define CUSTOMER_ID "8923742934234"
 #define SERIAL_NO "21G07W00331"
 #define MAX_QUEUE 10
+#define MAX_EVENTS 50
 #define TEMP_CHANGE_THRESHOLD 1
 #define TEMP_DANGER_THRESHOLD 45.0
 
@@ -26,6 +27,8 @@ typedef struct Queue_s
 } Queue;
 
 Queue temps;
+
+int events;
 
 void read_temp(double *tmp_);
 void event_send(double *tmp_);
@@ -40,6 +43,8 @@ int temp_trend(double *curr_, double *prior_);
 
 void setup()
 {
+
+  events = 0;
 
   temps.head = 0;
   temps.tail = -1;
@@ -132,11 +137,16 @@ void event_send(double *tmp_)
 
   String request = String("http://" + server + "/event%5Freceive.php?cid=" + customer_id + "&pid=" + product_id + "&sn=" + serial_no + "&tmp=" + tmp);
 
-  client.begin(request.c_str());
+  if (MAX_EVENTS > events)
+  {
+    client.begin(request.c_str());
 
-  client.GET();
+    client.GET();
 
-  client.end();
+    client.end();
+
+    events++;
+  }
 
   return;
 }
