@@ -6,14 +6,16 @@
 
 #include "/home/manny/Documents/misc/secrets.h"
 
+#define DEBUG_ON
+
 #define DOOR_SW_PIN 17
 #define SERVER "ec2-44-234-32-170.us-west-2.compute.amazonaws.com"
 #define PRODUCT_ID "INSIGNIA%20NS%2DCF26WH9"
 #define CUSTOMER_ID "8923742934234"
 #define SERIAL_NO "21G07W00331"
 #define MAX_QUEUE 10
-#define TEMP_CHANGE_THRESHOLD 3
-#define TEMP_DANGER_THRESHOLD 40.0
+#define TEMP_CHANGE_THRESHOLD 1
+#define TEMP_DANGER_THRESHOLD 45.0
 
 typedef struct Queue_s
 {
@@ -43,7 +45,9 @@ void setup()
   temps.tail = -1;
   temps.size = 0;
 
+#if defined(DEBUG_ON)
   Serial.begin(115200);
+#endif
 
   // pinMode(DOOR_SW_PIN, INPUT_PULLUP);
   pinMode(DOOR_SW_PIN, INPUT_PULLDOWN);
@@ -80,17 +84,18 @@ void loop()
     }
   }
 
-  Serial.print("Current: " + String(curr, 4));
-  Serial.print(" Prior: " + String(prior, 4));
-  Serial.print(" Trend: " + String(trend));
-
   if ((TEMP_DANGER_THRESHOLD < curr) && (0 < trend))
   {
-    Serial.println(" DANGER");
+    event_send(&curr);
+#if defined(DEBUG_ON)
+    Serial.println("debug: curr = " + String(curr, 4) + ", prior = " + String(prior, 4) + ", trend = " + String(trend) + " EVENT SENT!");
+#endif
   }
   else
   {
-    Serial.println(" SAFE");
+#if defined(DEBUG_ON)
+    Serial.println("debug: curr = " + String(curr, 4) + ", prior = " + String(prior, 4) + ", trend = " + String(trend));
+#endif
   }
 
   delay(60000);
