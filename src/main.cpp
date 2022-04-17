@@ -11,7 +11,7 @@
 #define PRODUCT_ID "INSIGNIA%20NS%2DCF26WH9"
 #define CUSTOMER_ID "8923742934234"
 #define SERIAL_NO "21G07W00331"
-#define MAX_QUEUE 100
+#define MAX_QUEUE 10
 
 typedef struct Queue_s
 {
@@ -53,13 +53,27 @@ void setup()
 
 void loop()
 {
-  double temp = 0.0;
+  double curr = 0.0;
+  double prior = 0.0;
 
   if (true == door_closed())
   {
 
-    read_temp(&temp);
+    read_temp(&curr);
+
+    queue_add(&curr);
+
+    if (true == queue_full())
+    {
+      queue_remove(&prior);
+    }
   }
+
+  Serial.print("Current: " + String(curr, 4));
+  Serial.print("Prior: " + String(prior, 4));
+  Serial.println();
+
+  delay(1000);
 
   return;
 }
