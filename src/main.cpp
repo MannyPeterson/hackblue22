@@ -21,40 +21,17 @@ typedef struct Queue_s
   int size;
 } Queue;
 
-Queue queue;
+Queue temps;
 
 void read_temp(double *tmp_);
 void event_send(double *tmp_);
 int door_closed(void);
-
-double queue_peek(void)
-{
-  return queue.arr[queue.head];
-}
-
-double queue_empty(void)
-{
-  int ret = false;
-
-  if (0 == queue.size)
-  {
-    ret = true;
-  }
-
-  return ret;
-}
-
-double queue_full(void)
-{
-  int ret = false;
-
-  if (MAX_QUEUE == queue.size)
-  {
-    ret = true;
-  }
-
-  return ret;
-}
+double queue_peek(void);
+int queue_empty(void);
+int queue_full(void);
+int queue_size(void);
+void queue_add(double *tmp_);
+void queue_remove(double *tmp_);
 
 void setup()
 {
@@ -136,4 +113,69 @@ int door_closed(void)
   }
 
   return ret;
+}
+
+double queue_peek(void)
+{
+  return temps.arr[temps.head];
+}
+
+int queue_empty(void)
+{
+  int ret = false;
+
+  if (0 == temps.size)
+  {
+    ret = true;
+  }
+
+  return ret;
+}
+
+int queue_full(void)
+{
+  int ret = false;
+
+  if (MAX_QUEUE == temps.size)
+  {
+    ret = true;
+  }
+
+  return ret;
+}
+
+int queue_size(void)
+{
+  return temps.size;
+}
+
+void queue_add(double *tmp_)
+{
+
+  if (false == queue_full())
+  {
+    if (MAX_QUEUE - 1 == temps.tail)
+    {
+      temps.tail = -1;
+    }
+
+    temps.arr[++temps.tail] = *tmp_;
+    temps.size++;
+  }
+
+  return;
+}
+
+void queue_remove(double *tmp_)
+{
+  *tmp_ = temps.arr[temps.head++];
+
+  if (MAX_QUEUE == temps.head)
+  {
+    temps.head = 0;
+  }
+
+  temps.size--;
+
+  return;
 }
