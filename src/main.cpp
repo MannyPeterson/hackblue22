@@ -11,10 +11,50 @@
 #define PRODUCT_ID "INSIGNIA%20NS%2DCF26WH9"
 #define CUSTOMER_ID "8923742934234"
 #define SERIAL_NO "21G07W00331"
+#define MAX_QUEUE 100
+
+typedef struct Queue_s
+{
+  double arr[MAX_QUEUE];
+  int head;
+  int tail;
+  int size;
+} Queue;
+
+Queue queue;
 
 void read_temp(double *tmp_);
 void event_send(double *tmp_);
 int door_closed(void);
+
+double queue_peek(void)
+{
+  return queue.arr[queue.head];
+}
+
+double queue_empty(void)
+{
+  int ret = false;
+
+  if (0 == queue.size)
+  {
+    ret = true;
+  }
+
+  return ret;
+}
+
+double queue_full(void)
+{
+  int ret = false;
+
+  if (MAX_QUEUE == queue.size)
+  {
+    ret = true;
+  }
+
+  return ret;
+}
 
 void setup()
 {
@@ -43,6 +83,8 @@ void loop()
 
     read_temp(&temp);
   }
+
+  return;
 }
 
 void read_temp(double *tmp_)
