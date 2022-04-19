@@ -24,13 +24,16 @@ $result = mysqli_query($conn, $sql);
 </head>
 <body>
 <div class="container">
-<div class="card border-primary mb-3">
-  <div class="card-body">
-  <h4 class="card-title">BIjaliwejfalejflaisejflaisfej</h4>
-  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+<div class="row mb-3">
+      <div class="col-md-3 themed-grid-col">.col-md-3</div>
+      <div class="col-md-6 themed-grid-col">.col-md-6</div>
+      <div class="col-md-3 themed-grid-col">.col-md-3</div>
 </div>
-</div>
-<div class="card border-primary mb-3">
+<div class="row mb-3">
+      <div class="col-md-3 themed-grid-col">.col-md-3</div>
+      <div class="col-md-6 themed-grid-col">
+
+      <div class="card border-primary mb-3">
   <div class="card-body">
   <h4 class="card-title">Best Buy Totaltech Inside Events</h4>
     <table class="table table-hover">
@@ -57,6 +60,12 @@ while($row = mysqli_fetch_array($result)) {
 ?>
   </div>
 </div>
+
+      </div>
+      <div class="col-md-3 themed-grid-col">.col-md-3</div>
+</div>
+
+
 </div>
 </body>
 </html>

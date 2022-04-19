@@ -9,7 +9,7 @@
 #define DEBUG_ON
 
 #define DOOR_SW_PIN 17
-#define SERVER "ec2-34-223-65-173.us-west-2.compute.amazonaws.com"
+#define SERVER "ec2-44-234-60-233.us-west-2.compute.amazonaws.com"
 #define PRODUCT_ID "INSIGNIA%20NS%2DCF26WH9"
 #define CUSTOMER_ID "8923742934234"
 #define SERIAL_NO "21G07W00331"
