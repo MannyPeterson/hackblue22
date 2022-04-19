@@ -103,7 +103,8 @@ void loop()
 #endif
   }
 
-  delay(60000);
+  delay(5000);
+  //delay(60000);
 
   return;
 }
