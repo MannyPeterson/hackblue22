@@ -9,7 +9,26 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
-                <div class="navbar-brand">Best Buy Totaltech Inside Dashboard</div>
+                <a class="navbar-brand" href="#">
+                    <strong>Best Buy Totaltech Inside Portal</strong>
+                </a>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Membership</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Device</a>
+                        </li>
+                    </ul>
+                    <button class="btn btn-danger my-2 my-sm-0" type="button">Log Out</button>
+                </div>
             </div>
         </nav>
         <div class="container">
@@ -23,7 +42,7 @@
                 <div class="col-md-10 themed-grid-col">
                     <div class="card border-primary mb-3">
                         <div class="card-body">
-                            <h4 class="card-title">Customer Events</h4>
+                            <h4 class="card-title">Events</h4>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -68,14 +87,14 @@
             <div class="row mb-3">
                 <div class="col-md-3 themed-grid-col"></div>
                 <div class="col-md-6 themed-grid-col text-center">
-                    <img src="hackblue22.svg"/>
+                    <img src="hackblue22.svg" />
                 </div>
                 <div class="col-md-3 themed-grid-col"></div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-1 themed-grid-col"></div>
                 <div class="col-md-10 themed-grid-col text-center">
-                    <p class="text-primary">Manny Peterson's Hack Blue 22 Project (C)Copyright 2022 Best Buy Co., Inc. All Rights Reserved.</p>
+                    <p class="text-muted">Manny Peterson's Hack Blue 22 Project (C)Copyright 2022 Best Buy Co., Inc. All Rights Reserved.</p>
                 </div>
                 <div class="col-md-1 themed-grid-col"></div>
             </div>
