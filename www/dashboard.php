@@ -66,6 +66,13 @@
                 <div class="col-md-1 themed-grid-col"></div>
             </div>
             <div class="row mb-3">
+                <div class="col-md-3 themed-grid-col"></div>
+                <div class="col-md-6 themed-grid-col text-center">
+                    <img src="hackblue22.svg"/>
+                </div>
+                <div class="col-md-3 themed-grid-col"></div>
+            </div>
+            <div class="row mb-3">
                 <div class="col-md-1 themed-grid-col"></div>
                 <div class="col-md-10 themed-grid-col text-center">
                     <p class="text-primary">Manny Peterson's Hack Blue 22 Project (C)Copyright 2022 Best Buy Co., Inc. All Rights Reserved.</p>
