@@ -15,7 +15,7 @@
 #define SERIAL_NO "21G07W00331"
 #define MAX_QUEUE 10
 #define MAX_EVENTS 50
-#define TEMP_CHANGE_THRESHOLD 1
+#define TEMP_CHANGE_THRESHOLD 1.2
 #define TEMP_DANGER_THRESHOLD 45.0
 
 typedef struct Queue_s
@@ -54,8 +54,7 @@ void setup()
   Serial.begin(115200);
 #endif
 
-  // pinMode(DOOR_SW_PIN, INPUT_PULLUP);
-  pinMode(DOOR_SW_PIN, INPUT_PULLDOWN);
+  pinMode(DOOR_SW_PIN, INPUT_PULLUP);
 
   WiFi.mode(WIFI_MODE_STA);
   WiFi.begin(SSID, PASS);
@@ -103,8 +102,7 @@ void loop()
 #endif
   }
 
-  delay(5000);
-  //delay(60000);
+  delay(60000);
 
   return;
 }
